@@ -11,6 +11,7 @@ const remainingCardCount = ref(0)
 const lastApiResponse = ref()
 const currentDeckId = ref()
 const lastCard = ref()
+const currentHand = ref([])
 const createNewDeck = () => {
   lastApiResponse.value = 'We tried to create a deck!'
   fetch('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -22,6 +23,7 @@ const createNewDeck = () => {
       currentDeckId.value = data.deck_id
       lastCard.value = undefined
       remainingCardCount.value = data.remaining
+      currentHand.value = []
     })
 }
 const shuffleDeck = () => {
@@ -36,6 +38,7 @@ const shuffleDeck = () => {
       currentDeckId.value = data.deck_id
       lastCard.value = undefined
       remainingCardCount.value = data.remaining
+      currentHand.value = []
     })
 }
 const drawCard = () => {
@@ -50,6 +53,7 @@ const drawCard = () => {
       currentDeckId.value = data.deck_id
       lastCard.value = data.cards[0]
       remainingCardCount.value = data.remaining
+      currentHand.value.push(lastCard.value)
     })
 }
 </script>
@@ -74,7 +78,7 @@ const drawCard = () => {
       <div>
         <button @click="createNewDeck">Create New Deck</button>
         <button @click="shuffleDeck">Shuffle Deck</button>
-        <button @click="drawCard">Draw a Card</button>
+        <button @click="drawCard" :disabled="currentHand.length >= 5">Draw a Card</button>
       </div>
       <h3>Current Deck ID: {{ currentDeckId }}</h3>
       <h3>Remaining Cards: {{ remainingCardCount }}</h3>
@@ -92,6 +96,16 @@ const drawCard = () => {
         :src="lastCard.image"
         :title="lastCard.value + ' of ' + lastCard.suit"
         :alt="lastCard.value + ' of ' + lastCard.suit"
+      />
+    </div>
+    <div>
+      <img
+        v-for="(card, index) in currentHand"
+        :key="index"
+        :src="card.image"
+        :title="card.value + ' of ' + card.suit"
+        :alt="card.value + ' of ' + card.suit"
+        width="50"
       />
     </div>
   </main>
