@@ -59,56 +59,57 @@ const drawCard = () => {
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-    <h1>text here</h1>
-  </header>
+  <div class="pokerTable">
+    <header>
+      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+      <h1>text here</h1>
+    </header>
 
-  <main>
-    <p>We got some main content fam.</p>
-    <p>We have {{ goatCount }} goats!</p>
-    <p>We need to have {{ requiredFood }} tin cans to feed them!</p>
-    <div>
-      <button @click="goatCount += 1">Add 1 Goat</button>
-      <button @click="goatCount += 4">Add 4 Goats</button>
-      <button @click="multiplyGoatsByFive">Multiply Goats by 5</button>
-    </div>
-    <div>
-      <h2>Playin some cards</h2>
+    <main>
+      <p>We got some main content fam.</p>
+      <p>We have {{ goatCount }} goats!</p>
+      <p>We need to have {{ requiredFood }} tin cans to feed them!</p>
       <div>
-        <button @click="createNewDeck">Create New Deck</button>
-        <button @click="shuffleDeck">Shuffle Deck</button>
-        <button @click="drawCard" :disabled="currentHand.length >= 5">Draw a Card</button>
+        <button @click="goatCount += 1">Add 1 Goat</button>
+        <button @click="goatCount += 4">Add 4 Goats</button>
+        <button @click="multiplyGoatsByFive">Multiply Goats by 5</button>
       </div>
-      <h3>Current Deck ID: {{ currentDeckId }}</h3>
-      <h3>Remaining Cards: {{ remainingCardCount }}</h3>
-      <!-- 
       <div>
-        <h4>Last API response:</h4>
-        <pre>{{ lastApiResponse }}</pre>
-        <h4>Last Card:</h4>
-        <pre>{{ lastCard }}</pre>
+        <h2>Playin some cards</h2>
+        <div>
+          <button @click="createNewDeck">Create New Deck</button>
+          <button @click="shuffleDeck">Shuffle Deck</button>
+          <button @click="drawCard" :disabled="currentHand.length >= 5">Draw a Card</button>
+        </div>
+        <h3>Current Deck ID: {{ currentDeckId }}</h3>
+        <h3>Remaining Cards: {{ remainingCardCount }}</h3>
+
+        <div>
+          <h4>Last API response:</h4>
+          <pre>{{ lastApiResponse }}</pre>
+          <h4>Last Card:</h4>
+          <pre>{{ lastCard }}</pre>
+        </div>
       </div>
-       -->
-    </div>
-    <div v-if="lastCard">
-      <img
-        :src="lastCard.image"
-        :title="lastCard.value + ' of ' + lastCard.suit"
-        :alt="lastCard.value + ' of ' + lastCard.suit"
-      />
-    </div>
-    <div>
-      <img
-        v-for="(card, index) in currentHand"
-        :key="index"
-        :src="card.image"
-        :title="card.value + ' of ' + card.suit"
-        :alt="card.value + ' of ' + card.suit"
-        width="50"
-      />
-    </div>
-  </main>
+      <div v-if="lastCard">
+        <img
+          :src="lastCard.image"
+          :title="lastCard.value + ' of ' + lastCard.suit"
+          :alt="lastCard.value + ' of ' + lastCard.suit"
+        />
+      </div>
+      <div>
+        <img
+          v-for="(card, index) in currentHand"
+          :key="index"
+          :src="card.image"
+          :title="card.value + ' of ' + card.suit"
+          :alt="card.value + ' of ' + card.suit"
+          :width="50 + index * 5"
+        />
+      </div>
+    </main>
+  </div>
 </template>
 
 <style scoped>
@@ -122,6 +123,11 @@ header h1 {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+.pokerTable {
+  /* background: url(./assets/pokertable.jpg); */
+  background-color: green;
+  padding: 20px;
 }
 
 @media (min-width: 1024px) {
